@@ -3,7 +3,7 @@
     internal class Program
     {
 
-        //Versão 1: Estrutura básica e entrada do usuário
+        //Versão 2: Gerar um número secreto aleatório
 
         static void Main(string[] args)
         {
@@ -12,11 +12,17 @@
             Console.WriteLine("-----------------------------------");
 
             // Lógica do Jogo
+            Random geradorDeNumeros = new Random();
 
-            Console.Write("Digite um número para chutar: ");
+            int numeroSecreto = geradorDeNumeros.Next(1,21);
+            
+
+            Console.Write("Digite um número (de 1 à 20) para chutar: ");
             int numerodigitado = int.Parse(Console.ReadLine());
 
             Console.WriteLine($"Você digitou o número:  {numerodigitado}");
+
+            Console.WriteLine($"O número secreto é: {numeroSecreto}");
             Console.ReadLine();
 
         }
