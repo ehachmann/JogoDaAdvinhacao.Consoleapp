@@ -5,10 +5,12 @@ namespace JogoDaAdivinhacao.Consoleapp
         internal class Program
         {
 
-            //Versão 4: Criar múltiplas tentativas
+            //Versão 5: Armazenar e exibir números jogados
 
             static void Main(string[] args)
             {
+                int contador = 0;
+                
                 while (true)
                 {
                     Console.Clear();
@@ -27,8 +29,8 @@ namespace JogoDaAdivinhacao.Consoleapp
 
                     Console.Write("Digite sua escolha: ");
                     string escolhaDeDificuldade = Console.ReadLine();
-
-                    int totalDeTentativas = 0;
+                
+                int totalDeTentativas = 0;
 
                     if (escolhaDeDificuldade == "1")
                         totalDeTentativas = 10;
@@ -37,11 +39,11 @@ namespace JogoDaAdivinhacao.Consoleapp
                     else
                         totalDeTentativas = 3;
 
+                // Lógica do Jogo
 
-                    // Lógica do Jogo
-
+                    int[] numerosJogados = new int[totalDeTentativas];
+                
                     Random geradorDeNumeros = new Random();
-
                     int numeroSecreto = geradorDeNumeros.Next(1, 21);
 
                     for (int tentativa = 1; tentativa <= totalDeTentativas; tentativa++)
@@ -54,6 +56,7 @@ namespace JogoDaAdivinhacao.Consoleapp
 
                         Console.Write("Digite um número entre 1 à 20 para chutar: ");
                         int numeroDigitado = int.Parse(Console.ReadLine());
+                        numerosJogados[contador] = numeroDigitado;
 
                         if (numeroDigitado == numeroSecreto)
                         {
@@ -83,12 +86,25 @@ namespace JogoDaAdivinhacao.Consoleapp
                             Console.WriteLine("-----------------------------------------------------------");
                         }
 
+                            Console.WriteLine("--------------------------------------");
+                            Console.WriteLine($"    Números que já foram Jogados:    ");
+                            Console.WriteLine("--------------------------------------");
+
+                        for (int i = 0; i < numerosJogados.Length; i++)
+                        {
+                            if (numerosJogados[i] != null)
+                                Console.WriteLine($"{i + 1}º Tentativa: {numerosJogados[i]}");
+                        }
+
                         Console.WriteLine("Pressione Enter para continuar...");
+                        
                         Console.ReadLine();
+                        contador += 1;
                     }
 
                     Console.Write("Deseja continuar? (S/N): ");
                     string opcaoContinuar = Console.ReadLine().ToUpper();
+                    contador = 0;
 
                     if (opcaoContinuar != "S")
                         break;
