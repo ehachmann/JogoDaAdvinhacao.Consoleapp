@@ -5,7 +5,7 @@ namespace JogoDaAdivinhacao.Consoleapp
         internal class Program
         {
 
-            //Versão 5: Armazenar e exibir números jogados
+            //Versão 6: Não permitir uso de números já chutados
 
             static void Main(string[] args)
             {
@@ -30,7 +30,7 @@ namespace JogoDaAdivinhacao.Consoleapp
                     Console.Write("Digite sua escolha: ");
                     string escolhaDeDificuldade = Console.ReadLine();
                 
-                int totalDeTentativas = 0;
+                    int totalDeTentativas = 0;
 
                     if (escolhaDeDificuldade == "1")
                         totalDeTentativas = 10;
@@ -39,7 +39,7 @@ namespace JogoDaAdivinhacao.Consoleapp
                     else
                         totalDeTentativas = 3;
 
-                // Lógica do Jogo
+                    // Lógica do Jogo
 
                     int[] numerosJogados = new int[totalDeTentativas];
                 
@@ -48,32 +48,46 @@ namespace JogoDaAdivinhacao.Consoleapp
 
                     for (int tentativa = 1; tentativa <= totalDeTentativas; tentativa++)
                     {
-
                         Console.Clear();
                         Console.WriteLine("-------------------------------------------");
                         Console.WriteLine($"Tentativa {tentativa} de {totalDeTentativas}");
                         Console.WriteLine("-------------------------------------------");
 
                         Console.Write("Digite um número entre 1 à 20 para chutar: ");
-                        int numeroDigitado = int.Parse(Console.ReadLine());
-                        numerosJogados[contador] = numeroDigitado;
+                        numerosJogados[contador] = int.Parse(Console.ReadLine());
 
-                        if (numeroDigitado == numeroSecreto)
+                        if (numerosJogados[contador] == numeroSecreto)
                         {
                             Console.WriteLine("-----------------------------------");
                             Console.WriteLine("      Parabéns, você acertou       ");
                             Console.WriteLine("-----------------------------------");
                             break;
                         }
-                        if (tentativa == totalDeTentativas)
+               
+                        if (contador >= 1)
+                        {
+                            for (int i = 0; i < contador; i++)
+                            {
+                                if (numerosJogados[i] == numerosJogados[contador])
+                                {
+                                    Console.WriteLine("--------------------------------------------");
+                                    Console.WriteLine("   Número já digitado, tente outro número!  ");
+                                    Console.WriteLine("--------------------------------------------");
+                                    tentativa -= 1;
+                                    contador -= 1;
+                                    
+                                }
+                            }
+                        }
+
+                        else if (tentativa == totalDeTentativas)
                         {
                             Console.WriteLine("-----------------------------------------------------------------------");
                             Console.WriteLine($" Que pena! Você usou todas as tentativas. O número era {numeroSecreto}");
                             Console.WriteLine("-----------------------------------------------------------------------");
                             break;
                         }
-
-                        else if (numeroDigitado > numeroSecreto)
+                        else if (numerosJogados[contador] > numeroSecreto)
                         {
                             Console.WriteLine("-----------------------------------------------------------");
                             Console.WriteLine("      O número digitado foi maior que o número secreto     ");
@@ -89,6 +103,8 @@ namespace JogoDaAdivinhacao.Consoleapp
                             Console.WriteLine("--------------------------------------");
                             Console.WriteLine($"    Números que já foram Jogados:    ");
                             Console.WriteLine("--------------------------------------");
+                            
+                 //       numerosJogados[contador] = numeroDigitado;
 
                         for (int i = 0; i < numerosJogados.Length; i++)
                         {
@@ -98,18 +114,19 @@ namespace JogoDaAdivinhacao.Consoleapp
 
                         Console.WriteLine("Pressione Enter para continuar...");
                         
+                        
                         Console.ReadLine();
                         contador += 1;
+                      
                     }
-
                     Console.Write("Deseja continuar? (S/N): ");
+                    
                     string opcaoContinuar = Console.ReadLine().ToUpper();
                     contador = 0;
-
+                
                     if (opcaoContinuar != "S")
                         break;
 
-                   //Console.ReadLine();
                 }
             }
         }
